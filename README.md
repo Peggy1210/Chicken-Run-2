@@ -19,17 +19,17 @@ Rabbit was in a trouble again! Chicken wanted to save its friend from the aliens
 
 * Start Scene
 
-&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot1.jpg" alt="image" width="50%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot2.png" alt="image" width="50%" height="auto">
+&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot1.jpg" alt="image" width="45%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot2.png" alt="image" width="45%" height="auto">
 
 * Introduction
 
-&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot3.jpg" alt="image" width="50%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot4.jpg" alt="image" width="50%" height="auto">
+&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot3.jpg" alt="image" width="45%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot4.jpg" alt="image" width="45%" height="auto">
 
 * Player Modes
 
-&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot5.png" alt="image" width="50%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot6.png" alt="image" width="50%" height="auto">
+&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot5.png" alt="image" width="45%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot6.png" alt="image" width="45%" height="auto">
 
 * Background Story & In-Game Shop
 
-&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot7.png" alt="image" width="50%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot8.png" alt="image" width="50%" height="auto">
+&ensp;&ensp;&ensp;&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot7.png" alt="image" width="45%" height="auto">&ensp;<img src="https://github.com/Peggy1210/intro-to-programming-II-final-project/blob/main/screenshots/screenshot8.png" alt="image" width="45%" height="auto">
 
