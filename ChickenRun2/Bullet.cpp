@@ -6,7 +6,7 @@
 Bullet::Bullet(int x, int y, int harm_point, int velocity, int dir, ALLEGRO_BITMAP* attack_img){
 
     // initialize the information of attack
-    this->circle = new Circle(x+100, y+100, 50);
+    this->circle = new Circle(x, y, 10);
     this->pos_x = x; this->pos_y = y;
     this->attack_velocity = velocity;
     this->harm_point = harm_point;

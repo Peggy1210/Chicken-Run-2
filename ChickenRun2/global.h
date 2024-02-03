@@ -45,22 +45,13 @@ extern int key_num;
 extern bool mouse_down;
 extern int mouse_x, mouse_y;
 
-// clock rate
-const float FPS = 60;
-
 const int velocity[] = {1, 2, 3, 4, 5};
 const int harm[] = {1, 2, 3, 4, 5};
-
-typedef enum{WIN, LOSE, GAME_CONTI}WIN_LOSE;
-typedef struct{
-    WIN_LOSE win_lose;
-    int level_coin;
-}Status;
 
 /// enumerate window
 typedef enum{STARTING, MAIN_MENU, INTRODUCTION, SETTINGS, REVIEW, CLOSE,
             PREVIEW, CHARACTER_CHOOSE, CHARACTER_NAMING, ENDING,
-            MODE_SELECTION, ONE_PLAYER_MODE, TWO_PLAYER_MODE, TWO_PLAYER_PLAY,
+            MODE_SELECTION, ONE_PLAYER_MODE, TWO_PLAYER_MODE,TWO_PLAYER_PLAY,
             MAP_MENU, STORE, LEVEL1, LEVEL2, LEVEL3
 }Windows;
 

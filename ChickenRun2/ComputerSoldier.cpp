@@ -1,4 +1,5 @@
 #include "ComputerSoldier.h"
+#include "RabbitSoldier.cpp"
 
 ComputerSoldier::ComputerSoldier(int lvl){
     for(int i=0; i<5; i++){

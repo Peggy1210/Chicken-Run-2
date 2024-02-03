@@ -1,6 +1,7 @@
 #ifndef OBJECT_H_INCLUDED
 #define OBJECT_H_INCLUDED
 
+#include <allegro5/allegro_image.h>
 #include "Circle.h"
 #include "global.h"
 

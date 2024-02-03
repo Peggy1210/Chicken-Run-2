@@ -1,13 +1,10 @@
 #ifndef RABBITSOLDIER_H_INCLUDED
 #define RABBITSOLDIER_H_INCLUDED
 
-#include "global.h"
 #include "Object.h"
 #include "Circle.h"
 #include "Bullet.h"
-#include "ChickenSoldier.h"
-//class ChickenSoldier;
-//class ChickenSoldier;
+#include "global.h"
 
 class RabbitSoldier:public Object{
 public:
@@ -17,10 +14,9 @@ public:
     // override virtual function "Object::Draw"
     void Draw();
     void Update();
-
     int getHarmPoint() { return harm_point; }
-    bool isAttacked();
-    bool Bullet_Attack(ChickenSoldier*);
+
+
     ///static float volume;
 
 protected:

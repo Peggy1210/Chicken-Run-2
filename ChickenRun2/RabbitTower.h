@@ -5,9 +5,7 @@
 #include "Object.h"
 #include "Circle.h"
 #include "Bullet.h"
-#include "ChicksTower.h"
-
-//#include "ChicksTower.h"
+#include "RabbitSoldier.h"
 
 class RabbitTower:public Object{
 public:
@@ -24,21 +22,26 @@ public:
     void UpdateAttack();
     // detect if tower needs to attack some monster
     void Attack();
-    //void Bullet_Attack(ChicksTower*);
+    void Attack(int);
 
-    bool isAttacked();
-    bool isBulletAttack(ChicksTower*);
     ///virtual int getWidth(){ return 40; }
     ///virtual int getHeight(){ return 40; }
 
     // show selected tower image on cursor position
     ///static void SelectedTower(int, int, int);
-
+std::vector<RabbitSoldier*> rabbitsoldier_set;std::vector<Bullet*> towerbullet_set;
 protected:
     // setting of attack
 
-    std::vector<Bullet*> towerbullet_set;
+
+    //std::vector<RabbitSoldier*> soldier_set;
     ALLEGRO_BITMAP *BulletImage;
+    ALLEGRO_BITMAP *soldierimage[5][3];
+    FILE *file;
+    int countTime = 0;
+    int soldierLV = 0;
+    int harm_point[5] = {10, 20, 30, 40, 50};
+    int velocity[5] = {1, 2, 3, 4, 5};
     int chickslife = 0;
     int bullet_harm_point = 5;
     int bullet_velocity = 10;
@@ -52,6 +55,8 @@ protected:
     int cooltime = 0;
     bool canAttack = false;
     int direction = 0;
+    int soldiercooltime = 0;
+    bool soldierAttack = false;
     ALLEGRO_FONT *font;
 };
 
