@@ -43,10 +43,16 @@
 		<Unit filename="Bullet.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="ChickenSoldier.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="ChicksTower.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="ChicksTower.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="ChikenSoldier.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="Circle.cpp" />
@@ -56,10 +62,20 @@
 		</Unit>
 		<Unit filename="GameWindow.cpp" />
 		<Unit filename="GameWindow.h" />
-		<Unit filename="Level.cpp" />
-		<Unit filename="Level.h" />
 		<Unit filename="Main.cpp" />
 		<Unit filename="Object.h" />
+		<Unit filename="RabbitSoldier.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="RabbitSoldier.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="RabbitTower.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="RabbitTower.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="Updates.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

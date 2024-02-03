@@ -4,11 +4,14 @@
 #include "global.h"
 #include "Object.h"
 #include "Circle.h"
+#include "Bullet.h"
 #include "ChickenSoldier.h"
+#include "SoldierButton.h"
+#include <vector>
 
 class SoldierButton:public Object{
 public:
-    SoldierButton();
+    SoldierButton(int);
     virtual ~SoldierButton();
 
     // override virtual function "Object::Draw"
@@ -30,10 +33,10 @@ public:
 
 protected:
     std::vector<ChickenSoldier*> chickensoldier_set;
-    ALLEGRO_BITMAP *buttonimage[5];
+    ALLEGRO_BITMAP *buttonimage[5][2];
     ALLEGRO_BITMAP *soldierimage[5][3];
     int harm_point[5] = {10, 20, 30, 40, 50};
-    int velocity[5] = {10, 20, 30, 40, 50};
+    int velocity[5] = {1, 2, 3, 4, 5};
 
     int Level = -1;
     int cooltimeLV1 = 0, cooltimeLV2 = 0, cooltimeLV3 = 0, cooltimeLV4 = 0, cooltimeLV5 = 0;

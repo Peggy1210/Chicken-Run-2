@@ -1,24 +1,9 @@
 #ifndef MAINWINDOW_H_INCLUDED
 #define MAINWINDOW_H_INCLUDED
 
-#include <vector>
 #include <list>
 #include <time.h>
 #include "global.h"
-#include "Level.h"
-///#include "WolfKnight.h"
-///#include "CaveMan.h"
-///#include "Wolf.h"
-///#include "DemonNijia.h"
-///#include "Arcane.h"
-///#include "Archer.h"
-///#include "Canon.h"
-///#include "Poison.h"
-///#include "Storm.h"
-///#include "Attack.h"
-///#include "Slider.h"
-#include "ChicksTower.h"
-#include "SoldierButton.h"
 
 #define GAME_INIT -1
 #define GAME_SETTING 0
@@ -133,7 +118,7 @@ private:
     ALLEGRO_SAMPLE_INSTANCE *failSound = NULL;
     ALLEGRO_SAMPLE_INSTANCE *backgroundSound = NULL;
 
-    LEVEL *level = NULL;
+    //LEVEL *level = NULL;
     ///Window *window = NULL;
     ///Menu *menu = NULL;
 
@@ -156,14 +141,15 @@ private:
     Windows window = PREVIEW;
     ALLEGRO_BITMAP *manga[10];
     ALLEGRO_BITMAP *loading[3];
-    ALLEGRO_BITMAP *chicktower[3];
-    ALLEGRO_BITMAP *rabbittower;
-    ALLEGRO_BITMAP *chicksoldier[5][3];
     ALLEGRO_BITMAP *levelbackground[3];
+    ALLEGRO_BITMAP *storebackground;
+    ALLEGRO_BITMAP *storebasket;
     int chicklevel = 1;
     //std::vector<*ChickSoldier> chicksoldier_set;
     ChicksTower *chickstower;
-    SoldierButton *soldierbutton;
+    RabbitTower *rabbittower;
+    //SoldierButton *chickensoldier;
+    //ComputerSoldier *rabbitsoldier;
     /*ALLEGRO_BITMAP *character[4][5];*/
     int flip = -1;
     bool named = false;

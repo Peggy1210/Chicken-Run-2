@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 #include "global.h"
 #include "ChicksTower.cpp"
-#include "SoldierButton.cpp"
+#include "RabbitTower.cpp"
 
 Windows GameWindow::Main_menu_update(){
 
@@ -66,8 +66,11 @@ Windows GameWindow::Loading_update(){
 Windows GameWindow::Mode_selection_update(){}
 
 Windows GameWindow::One_player_mode_update(){
-    chickstower = new ChicksTower(this->chicklevel);
-    soldierbutton = new SoldierButton();
+    printf("%d", chicklevel);
+    chickstower = new ChicksTower(this->chicklevel, RIGHT);
+    rabbittower = new RabbitTower(this->chicklevel, LEFT);
+    //chickensoldier = new SoldierButton(this->chicklevel);
+    //rabbitsoldier = new ComputerSoldier(this->chicklevel);
     return LEVEL1;
 }
 
@@ -78,31 +81,53 @@ Windows GameWindow::Map_menu_update(){}
 Windows GameWindow::Store_update(){}
 
 Windows GameWindow::Level1_update(){
-    int i;
-    chickstower->UpdateAttack();
-    soldierbutton->UpdateAttack();
     if(key_state[ALLEGRO_KEY_ENTER]){
         key_state[ALLEGRO_KEY_ENTER] = false;
         chickstower->Attack();
     }else if(key_state[ALLEGRO_KEY_1]){
         key_state[ALLEGRO_KEY_1] = false;
-        soldierbutton->Attack(1);
+        chickstower->Attack(1);
     }else if(key_state[ALLEGRO_KEY_2]){
         key_state[ALLEGRO_KEY_2] = false;
-        soldierbutton->Attack(2);
+        chickstower->Attack(2);
     }else if(key_state[ALLEGRO_KEY_3]){
         key_state[ALLEGRO_KEY_3] = false;
-        soldierbutton->Attack(3);
+        chickstower->Attack(3);
     }else if(key_state[ALLEGRO_KEY_4]){
         key_state[ALLEGRO_KEY_4] = false;
-        soldierbutton->Attack(4);
+        chickstower->Attack(4);
     }else if(key_state[ALLEGRO_KEY_5]){
         key_state[ALLEGRO_KEY_5] = false;
-        soldierbutton->Attack(5);
+        chickstower->Attack(5);
     }
+    if(mouse_down && mouse_x>=500 && mouse_x<=700 && mouse_y>=750 && mouse_y<=950){
+        mouse_down = false;
+        chickstower->Attack(1);
+    }else if(mouse_down && mouse_x>=800 && mouse_x<=1000 && mouse_y>=750 && mouse_y<=950){
+        mouse_down = false;
+        chickstower->Attack(2);
+    }else if(mouse_down && mouse_x>=1100 && mouse_x<=1300 && mouse_y>=750 && mouse_y<=950){
+        mouse_down = false;
+        chickstower->Attack(3);
+    }else if(mouse_down && mouse_x>=1400 && mouse_x<=1600 && mouse_y>=750 && mouse_y<=950){
+        mouse_down = false;
+        chickstower->Attack(4);
+    }else if(mouse_down && mouse_x>=1700 && mouse_x<=1900 && mouse_y>=750 && mouse_y<=950){
+        mouse_down = false;
+        chickstower->Attack(5);
+    }else if(mouse_down && ((mouse_x*mouse_x)+(mouse_y-window_height)*(mouse_y-window_height)<=300*300)){
+        mouse_down = false;
+        chickstower->Attack();
+    }
+    chickstower->UpdateAttack();
+    //chickensoldier->UpdateAttack();
+    rabbittower->UpdateAttack();
+    //rabbitsoldier->UpdateAttack();
+
+
 
     //delete chickstower
-    //delete soldierbutton
+    //delete chickensoldier
     return LEVEL1;
 }
 

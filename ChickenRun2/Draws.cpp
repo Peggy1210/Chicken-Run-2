@@ -58,13 +58,19 @@ void GameWindow::Two_player_mode_draw(){}
 void GameWindow::Map_menu_draw(){
 }
 
-void GameWindow::Store_draw(){}
+void GameWindow::Store_draw(){
+    al_draw_bitmap(storebackground, 0, 0, 0);
+    //if()
+    al_draw_bitmap(storebasket, 300, 400, 0);
+    al_draw_bitmap(storebasket, 1200, 400, 0);
+}
 
 void GameWindow::Level1_draw(){
     al_draw_bitmap(levelbackground[0], 0, 0, 0);
     chickstower->Draw();
-    printf("11");
-    soldierbutton->Draw();
+    //chickensoldier->Draw();
+    rabbittower->Draw();
+    //rabbitsoldier->Draw();
 }
 void GameWindow::Level2_draw(){}
 void GameWindow::Level3_draw(){}

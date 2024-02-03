@@ -14,8 +14,6 @@
 #define max(a, b) ((a) > (b)? (a) : (b))
 
 void GameWindow::game_init(){
-    char buffer[50];
-
     icon = al_load_bitmap("./icon.png");
     background = al_load_bitmap("./backgrounds/temp.png");
 
@@ -31,8 +29,6 @@ void GameWindow::game_init(){
     backgroundSound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(backgroundSound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(backgroundSound, al_get_default_mixer());
-
-    level = new LEVEL(1);
 }
 
 bool GameWindow::mouse_hover(int startx, int starty, int width, int height){
@@ -108,39 +104,16 @@ GameWindow::GameWindow(){
         sprintf(buffer, "./backgrounds/loading%d.jpg", i+1);
         loading[i] = al_load_bitmap(buffer);
     }
+    storebackground = al_load_bitmap("./backgrounds/store.jpeg");
+    storebasket = al_load_bitmap("./backgrounds/basket.png");
 
     for(int i=0; i<3; i++){
         char buffer[50];
-        sprintf(buffer, "./character/run%d_left.png", i+1);
-        chicktower[i] = al_load_bitmap(buffer);
-    }
-    rabbittower = al_load_bitmap("./character/rabbit4.png");
-
-    for(int i=0; i<3; i++){
-        levelbackground[i] = al_load_bitmap("./backgrounds/temp.png");
+        sprintf(buffer, "./backgrounds/level%d_background.jpg", i+1);
+        levelbackground[i] = al_load_bitmap(buffer);
     }
 
-    for(int i=0; i<5; i++){
-        char buffer1[50];
-        sprintf(buffer1, "./character/chickenLV%d_1.png", i+1);
-        chicksoldier[i][0] = al_load_bitmap(buffer1);
-        char buffer2[50];
-        sprintf(buffer2, "./character/chickenLV%d_2.png", i+1);
-        chicksoldier[i][1] = al_load_bitmap(buffer2);
-        char buffer3[50];
-        sprintf(buffer3, "./character/chickenLV%d_1.png", i+1);
-        chicksoldier[i][2] = al_load_bitmap(buffer3);
-    }
-    /*for(int i=0; i<4; i++){
-        char buffer1[50];
-        sprintf(buffer1, "./character/run%d_left.jpg", i+1);
-        character[i][0] = al_load_bitmap(buffer1);
-        char buffer2[50];
-        sprintf(buffer2, "./character/run%d_left1.jpg", i+1);
-        character[i][1] = al_load_bitmap(buffer2);
-    }*/
-
-    menufont = al_load_font("./fonts/pirulen.ttf", 12, 0);
+    menufont = al_load_font("./fonts/pirulen.ttf", 20, 0);
 
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -295,11 +268,8 @@ void GameWindow::game_reset(){
     ///selectedTower = -1;
     ///lastClicked = -1;
     Coin_Inc_Count = 0;
-    ///Monster_Pro_Count = 0;
     mute = false;
     redraw = false;
-    ///menu->Reset();
-    ///window->Reset();
 
     // stop sample instance
     al_stop_sample_instance(backgroundSound);
@@ -311,8 +281,8 @@ void GameWindow::game_reset(){
 
     flip = 0;
     named = false;
-    window = ONE_PLAYER_MODE;
-    int chicklevel = 0;
+    window = STORE;
+    chicklevel = 1;
 }
 
 void GameWindow::game_destroy(){
@@ -337,25 +307,23 @@ void GameWindow::game_destroy(){
     al_destroy_sample_instance(startSound);
     al_destroy_sample_instance(backgroundSound);
 
-    delete level;
+    //delete level;
+    delete chickstower;
+    delete rabbittower;
+    //delete chickensoldier;
     ///delete window;
     ///delete menu;
 
+    for(int i=0; i<3; i++)
+        al_destroy_bitmap(levelbackground[i]);
+    al_destroy_bitmap(storebackground);
+    al_destroy_bitmap(storebasket);
     for(int i=0; i<10; i++){
         al_destroy_bitmap(manga[i]);
     }
     for(int i=0; i<3; i++){
         al_destroy_bitmap(loading[i]);
     }
-    for(int i=0; i<5; i++){
-        al_destroy_bitmap(chicksoldier[i][0]);
-        al_destroy_bitmap(chicksoldier[i][1]);
-        al_destroy_bitmap(chicksoldier[i][2]);
-    }
-    /*for(int i=0; i<4; i++){
-        for(int j=0; j<2; j++)
-            al_destroy_bitmap(character[i][j]);
-    }*/
     al_destroy_font(menufont);
 }
 
@@ -486,36 +454,6 @@ int GameWindow::process_event(){
 }
 
 void GameWindow::draw_running_map(){
-    ///printf("%d", window);
-
-    ///call draw function of every object
-    unsigned int i, j;
-
-    ///al_clear_to_color(al_map_rgb(100, 100, 100));
-    ///al_draw_bitmap(background, 0, 0, 0);
-    ///
-    /*for(i=0; i<field_height/40; i++){
-        for(j=0; j<field_width/40; j++){
-            char buffer[50];
-            sprintf(buffer, "%d", i*15 + j);
-            if(level->isRoad(i*15 + j)) {
-                al_draw_filled_rectangle(j*40, i*40, j*40+40, i*40+40, al_map_rgb(255, 244, 173));
-            }
-            //al_draw_text(font, al_map_rgb(0, 0, 0), j*40, i*40, ALLEGRO_ALIGN_CENTER, buffer);
-        }
-    }*/
-    ///for(i=0; i<monsterSet.size(); i++){
-    ///    monsterSet[i]->Draw();
-    ///}
-
-
-    ///for(std::list<Tower*>::iterator it = towerSet.begin(); it != towerSet.end(); it++)
-    ///    (*it)->Draw();
-
-    ///if(selectedTower != -1)
-    ///    Tower::SelectedTower(mouse_x, mouse_y, selectedTower);
-
-    ///al_draw_filled_rectangle(field_width, 0, window_width, window_height, al_map_rgb(100, 100, 100));
     switch(window){
     case MAIN_MENU:
         Main_menu_draw(); break;

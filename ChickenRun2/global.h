@@ -12,6 +12,9 @@
 #define field_width 600
 #define field_height 600
 
+#define RIGHT 1
+#define LEFT -1
+
 #define Num_TowerType 5
 #define Num_MonsterType 4
 #define NumOfGrid (field_width / grid_width) * (field_height / grid_height)
@@ -26,7 +29,11 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_ttf.h>
 #include <vector>
+#include <string>
 #include "Circle.h"
+#include "ChicksTower.h"
+#include "RabbitTower.h"
+
 
 extern int TowerRadius[];
 extern char TowerClass[][20];
@@ -38,6 +45,9 @@ extern bool key_state[];
 extern bool key_down;
 extern bool mouse_down;
 extern int mouse_x, mouse_y;
+
+const int velocity[] = {1, 2, 3, 4, 5};
+const int harm[] = {1, 2, 3, 4, 5};
 
 /// enumerate window
 typedef enum{MAIN_MENU, INTRODUCTION, SETTINGS, REVIEW, CLOSE,
