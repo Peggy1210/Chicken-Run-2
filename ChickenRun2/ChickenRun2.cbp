@@ -37,6 +37,19 @@
 			<Add option="-fexceptions" />
 			<Add directory="allegro/include" />
 		</Compiler>
+		<Unit filename="Bullet.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="Bullet.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="ChicksTower.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="ChicksTower.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="Circle.cpp" />
 		<Unit filename="Circle.h" />
 		<Unit filename="Draws.cpp">
 			<Option target="&lt;{~None~}&gt;" />
@@ -47,12 +60,6 @@
 		<Unit filename="Level.h" />
 		<Unit filename="Main.cpp" />
 		<Unit filename="Object.h" />
-		<Unit filename="Tower.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="Tower.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="Updates.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

@@ -17,6 +17,8 @@
 ///#include "Storm.h"
 ///#include "Attack.h"
 ///#include "Slider.h"
+#include "ChicksTower.h"
+#include "SoldierButton.h"
 
 #define GAME_INIT -1
 #define GAME_SETTING 0
@@ -157,7 +159,11 @@ private:
     ALLEGRO_BITMAP *chicktower[3];
     ALLEGRO_BITMAP *rabbittower;
     ALLEGRO_BITMAP *chicksoldier[5][3];
-    int chicklevel = 1; //towerlevel
+    ALLEGRO_BITMAP *levelbackground[3];
+    int chicklevel = 1;
+    //std::vector<*ChickSoldier> chicksoldier_set;
+    ChicksTower *chickstower;
+    SoldierButton *soldierbutton;
     /*ALLEGRO_BITMAP *character[4][5];*/
     int flip = -1;
     bool named = false;

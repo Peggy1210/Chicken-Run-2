@@ -1,7 +1,18 @@
 #include "ChicksTower.h"
+#include "Bullet.cpp"
 
 ChicksTower::ChicksTower(int level){
+
     this->circle = new Circle(200, 200, 100);
+    char buffer1[50];
+    sprintf(buffer1, "./tower/chicktowerLV%d.png", level);
+    TowerImage = al_load_bitmap(buffer1);
+    char buffer2[50];
+    sprintf(buffer2, "./tower/towerbulletLV%d.png", level);
+    BulletImage = al_load_bitmap(buffer2);
+    chickslife = 10000*level;
+    Level = level;
+    font = al_load_font("./fonts/pirulen.ttf", 12, 0);
 }
 
 ChicksTower::~ChicksTower(){
@@ -10,80 +21,51 @@ ChicksTower::~ChicksTower(){
     ///al_destroy_bitmap(img);
     ///al_destroy_bitmap(attack_img);
 
-    for(auto&& child : this->attack_set){
+    al_destroy_bitmap(TowerImage);
+    al_destroy_bitmap(BulletImage);
+    al_destroy_font(font);
+
+    for(auto&& child: this->towerbullet_set){
         delete child;
     }
-    this->attack_set.clear();
+    this->towerbullet_set.clear();
 }
 
 void ChicksTower::Draw(){
-    /*int draw_x = circle->x - (TowerWidth[this->type]/2);
-    int draw_y = circle->y - (TowerHeight[this->type] - (TowerWidth[this->type]/2));
+    al_draw_bitmap(TowerImage, 200, 200, 0);
 
+    char buffer[50];
+    sprintf(buffer, "HP %d", chickslife);
+    al_draw_text(font, al_map_rgb(0, 0, 0), 200, 100, ALLEGRO_ALIGN_LEFT, buffer);
 
-    al_draw_bitmap(img, draw_x, draw_y, 0);
+    for(unsigned int i=0; i<this->towerbullet_set.size(); i++){
+        this->towerbullet_set[i]->Draw();
+    }
 
-    for(unsigned int i=0; i<this->attack_set.size(); i++)
-        this->attack_set[i]->Draw();
-
-    if(isClicked){
-        al_draw_filled_circle(circle->x, circle->y, circle->r, al_map_rgba(196, 79, 79, 200));
-        al_draw_filled_circle(circle->x, circle->y, 2, al_map_rgb(0, 0, 0));
-    }*/
+    al_draw_filled_rectangle(0, window_height-cooltime*2, 50, window_height, al_map_rgb(255, 0, 0));
 }
 
-/*bool ChicksTower::DetectAttack(Monster *monster){
-    bool willAttack = false;
-    Attack *attack;
-
-    if(Circle::isOverlap(this->circle, monster->getCircle()))
-    {
-        if(attack_counter == 0)
-        {
-            attack = new Attack(
-                this->circle,
-                monster->getCircle(),
-                this->attack_harm_point,
-                this->attack_velocity,
-                this->attack_img
-            );
-
-            this->attack_set.push_back(attack);
-            willAttack = true;
-        }
-
-        attack_counter = (attack_counter + 1) % attack_frequency;
+void ChicksTower::Attack(){
+    if(canAttack){
+        Bullet *bullet;
+        bullet = new Bullet(200, 200, this->bullet_harm_point, this->bullet_velocity, 1, this->BulletImage);
+        this->towerbullet_set.push_back(bullet);
+        canAttack = false;
+        cooltime = 0;
     }
-
-    return willAttack;
-}*/
-
-bool ChicksTower::TriggerAttack(Monster *monster){
-    bool isDestroyed = false;
-
-    for(unsigned int i = 0; i < this->attack_set.size(); i++)
-    {
-        if(Circle::isOverlap(attack_set[i]->getCircle(), monster->getCircle()))
-        {
-            /*TODO5:*/
-            /*1. Reduce the monster HP by the harm point*/
-            /*2. Erase and delete the attack from attack set*/
-            /*3. Return true if the monster's HP is reduced to zero*/
-            if(monster->Subtract_HP(attack_set[i]->getHarmPoint())){
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 void ChicksTower::UpdateAttack(){
-    for(unsigned int i=0; i < this->attack_set.size(); i++){
-        if(!Circle::isOverlap(this->attack_set[i]->getCircle(), this->circle)){
-            Attack *attack = this->attack_set[i];
-            this->attack_set.erase(this->attack_set.begin() + i);
+    if(cooltime<500) cooltime++;
+    if(cooltime==500) canAttack = true;
+    for(unsigned int i=0; i < this->towerbullet_set.size(); i++){
+        towerbullet_set[i]->Update();
+        /*if(towerbullet_set[i]->getX()>=window_width){
+            Bullet *bullet = this->towerbullet_set[i];
+            this->towerbullet_set.erase(this->towerbullet_set.begin() + i);
             i--;
-            delete attack;
-        }
+            delete bullet;
+        }*/
     }
+    //printf("%d", cooltime);
 }

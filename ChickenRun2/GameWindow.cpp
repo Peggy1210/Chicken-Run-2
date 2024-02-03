@@ -13,28 +13,11 @@
 #define min(a, b) ((a) < (b)? (a) : (b))
 #define max(a, b) ((a) > (b)? (a) : (b))
 
-
-///float Attack::volume = 1.0;
-
-///void set_attack_volume(float volume){
-///    Attack::volume = volume;
-///}
-
-///bool compare(Tower *t1, Tower *t2){
-///    return (t1->getY() <= t2->getY());
-///}
-
 void GameWindow::game_init(){
     char buffer[50];
 
     icon = al_load_bitmap("./icon.png");
     background = al_load_bitmap("./backgrounds/temp.png");
-    ///if(background==NULL) show_err_msg(1);
-
-    ///for(int i = 0; i < Num_TowerType; i++){
-    ///    sprintf(buffer, "./Tower/%s.png", TowerClass[i]);
-    ///    tower[i] = al_load_bitmap(buffer);
-    ///}
 
     al_set_display_icon(display, icon);
     al_reserve_samples(3);
@@ -43,17 +26,13 @@ void GameWindow::game_init(){
     startSound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(startSound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(startSound, al_get_default_mixer());
-    ///if(sample==NULL) show_err_msg(2);
 
     sample = al_load_sample("./music/BackgroundMusic.ogg");
     backgroundSound = al_create_sample_instance(sample);
     al_set_sample_instance_playmode(backgroundSound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(backgroundSound, al_get_default_mixer());
-    ///if(sample==NULL) show_err_msg(3);
 
     level = new LEVEL(1);
-    ///menu = new Menu();
-    ///window = new Window();
 }
 
 bool GameWindow::mouse_hover(int startx, int starty, int width, int height){
@@ -63,85 +42,6 @@ bool GameWindow::mouse_hover(int startx, int starty, int width, int height){
 
     return false;
 }
-
-///
-/*bool GameWindow::isOnRoad(){
-    int startx, starty;
-    int widthOfTower;
-
-    widthOfTower = TowerWidth[selectedTower];
-
-    for(int i=0; i < NumOfGrid; i++){
-        startx = (i % 15) * 40;
-        starty = (i / 15) * 40;
-
-        if(level->isRoad(i)) {
-            if((mouse_x + (widthOfTower/2) < startx) || (mouse_x - (widthOfTower/2) > startx + grid_width))
-                continue;
-            else if((mouse_y + (widthOfTower/2) < starty) || (mouse_y > starty + grid_height))
-                continue;
-            else
-                return true;
-        }
-    }
-    return false;
-}*/
-
-///
-/*
-Tower* GameWindow::create_tower(int type){
-    Tower *t = NULL;
-
-    if(isOnRoad())
-        return t;
-
-    switch(type){
-    case ARCANE:
-        t = new Arcane(mouse_x, mouse_y);
-        break;
-    case ARCHER:
-        t = new Archer(mouse_x, mouse_y);
-        break;
-    case CANON:
-        t = new Canon(mouse_x, mouse_y);
-        break;
-    case POISON:
-        t = new Poison(mouse_x, mouse_y);
-        break;
-    case STORM:
-        t = new Storm(mouse_x, mouse_y);
-        break;
-    default:
-        break;
-    }
-
-    menu->Change_Coin(menu->getTowerCoin(type));
-
-    return t;
-}*/
-
-///
-/*Monster* GameWindow::create_monster(){
-    Monster *m = NULL;
-
-    if(level->MonsterNum[WOLF]){
-        level->MonsterNum[WOLF]--;
-        m = new Wolf(level->ReturnPath());
-    }else if(level->MonsterNum[WOLFKNIGHT]){
-        level->MonsterNum[WOLFKNIGHT]--;
-        m = new WolfKnight(level->ReturnPath());
-    }else if(level->MonsterNum[DEMONNIJIA]){
-        level->MonsterNum[DEMONNIJIA]--;
-        m = new DemonNijia(level->ReturnPath());
-    }else if(level->MonsterNum[CAVEMAN]){
-        level->MonsterNum[CAVEMAN]--;
-        m = new CaveMan(level->ReturnPath());
-    }else{
-        al_stop_timer(monster_pro);
-    }
-
-    return m;
-}*/
 
 void GameWindow::game_play(){
     int msg;
@@ -180,10 +80,6 @@ GameWindow::GameWindow(){
     event_queue = al_create_event_queue();
 
     timer = al_create_timer(1.0 / FPS);
-    ///monster_pro = al_create_timer(1.0 / FPS);
-
-    ///if(timer==NULL || monster_pro==NULL)
-    ///    show_err_msg(-1);
 
     if(display==NULL || event_queue==NULL)
         show_err_msg(-1);
@@ -220,6 +116,10 @@ GameWindow::GameWindow(){
     }
     rabbittower = al_load_bitmap("./character/rabbit4.png");
 
+    for(int i=0; i<3; i++){
+        levelbackground[i] = al_load_bitmap("./backgrounds/temp.png");
+    }
+
     for(int i=0; i<5; i++){
         char buffer1[50];
         sprintf(buffer1, "./character/chickenLV%d_1.png", i+1);
@@ -247,7 +147,6 @@ GameWindow::GameWindow(){
     al_register_event_source(event_queue, al_get_mouse_event_source());
 
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
-    ///al_register_event_source(event_queue, al_get_timer_event_source(monster_pro));
 
     game_init();
 }
@@ -256,16 +155,16 @@ GameWindow::GameWindow(){
 void GameWindow::game_begin(){
     //printf(">>> Start Level[%d]\n", level->getLevel());
     draw_running_map();
-    printf("draw_running_map\n");
+    ///printf("draw_running_map\n");
 
     al_play_sample_instance(startSound);
-    printf("al_play_sample_instance\n");
+    ///printf("al_play_sample_instance\n");
     while(al_get_sample_instance_playing(startSound));
     al_play_sample_instance(backgroundSound);
-    printf("al_play_sample_instance\n");
+    ///printf("al_play_sample_instance\n");
 
     al_start_timer(timer);
-    printf("al_start_timer\n");
+    ///printf("al_start_timer\n");
     ///al_start_timer(monster_pro);
 }
 
@@ -412,7 +311,7 @@ void GameWindow::game_reset(){
 
     flip = 0;
     named = false;
-    window = PREVIEW;
+    window = ONE_PLAYER_MODE;
     int chicklevel = 0;
 }
 
@@ -587,6 +486,8 @@ int GameWindow::process_event(){
 }
 
 void GameWindow::draw_running_map(){
+    ///printf("%d", window);
+
     ///call draw function of every object
     unsigned int i, j;
 
