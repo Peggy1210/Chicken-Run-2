@@ -1,16 +1,14 @@
 #include "ChickenSoldier.h"
-
-///const int Velocity[] = {8, 8, 6, 10, 20};
-///const int Harm[] = {5, 7, 15, 3, 5};
+#include "RabbitSoldier.h"
 
 ChickenSoldier::ChickenSoldier(int x, int y, int harm_point, int lvl, int dir, ALLEGRO_BITMAP* img1, ALLEGRO_BITMAP* img2, ALLEGRO_BITMAP* img3){
     // initialize the information of attack
     this->direction = dir;
     this->Level = lvl;
-    soldierlife = lvl*1000;
+    soldierlife = lvl*100;
     char buffer[50];
     if(direction==RIGHT){
-        this->circle = new Circle(x+200, y+200, 100);
+        this->circle = new Circle(x+100, y+100, 200);
         this->pos_x = x; this->pos_y = y;
         this->soldiervelocity = velocity[lvl-1];
         this->harm_point = harm[lvl-1];
@@ -58,7 +56,7 @@ void ChickenSoldier::Update(){
     circle->x = this->pos_x;
     if(++attack_count%(300/Level)>=200/Level){
         attack = true;
-        printf("%d ", attack_count);
+        //printf("%d ", attack_count);
         if(this->attack_count%(300/Level)==200/Level){
             Bullet *bullet;
             bullet = new Bullet(pos_x, pos_y, this->harm_point, 5*this->soldiervelocity, direction, this->bullet_img);
@@ -75,6 +73,24 @@ void ChickenSoldier::Update(){
             delete bullet;
         }
     }
+}
+
+bool ChickenSoldier::isAttacked(){
+    this->soldierlife -= 100;
+    if(this->soldierlife<=0) return true;
+    else return false;
+}
+
+bool ChickenSoldier::Bullet_Attack(RabbitSoldier *rabbit){
+    for(unsigned int i=0; i<this->chickbullet_set.size(); i++){
+        if(Circle::isOverlap(rabbit->circle, chickbullet_set[i]->circle)){
+            Bullet *bullet = this->chickbullet_set[i];
+            this->chickbullet_set.erase(this->chickbullet_set.begin() + i);
+            delete bullet;
+            return true;
+        }
+    }
+    return false;
 }
 /*
 void ChickenSoldier::AttackPoint(RabbitSoldier* soldier){

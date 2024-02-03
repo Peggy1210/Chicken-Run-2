@@ -45,14 +45,27 @@ extern int key_num;
 extern bool mouse_down;
 extern int mouse_x, mouse_y;
 
+// clock rate
+const float FPS = 60;
+
 const int velocity[] = {1, 2, 3, 4, 5};
 const int harm[] = {1, 2, 3, 4, 5};
 
+// 1 coin every 2 seconds
+const int CoinSpeed = FPS * 2;
+const int Coin_Limit = 100000;
+
+typedef enum{WIN, LOSE, GAME_CONTI, LEFT_WIN, RIGHT_WIN}WIN_LOSE;
+typedef struct{
+    WIN_LOSE win_lose;
+    int level_coin;
+}Status;
+
 /// enumerate window
-typedef enum{STARTING, MAIN_MENU, INTRODUCTION, SETTINGS, REVIEW, CLOSE,
+typedef enum{STARTING, MAIN_MENU, INTRODUCTION, SETTINGS, CLOSE,
             PREVIEW, CHARACTER_CHOOSE, CHARACTER_NAMING, ENDING,
-            MODE_SELECTION, ONE_PLAYER_MODE, TWO_PLAYER_MODE,TWO_PLAYER_PLAY,
-            MAP_MENU, STORE, LEVEL1, LEVEL2, LEVEL3
+            MODE_SELECTION, ONE_PLAYER_MODE, TWO_PLAYER_MODE, TWO_PLAYER_PLAY,
+            MAP_MENU, STORE, LEVEL
 }Windows;
 
 enum {ARCANE = 0, ARCHER, CANON, POISON, STORM};

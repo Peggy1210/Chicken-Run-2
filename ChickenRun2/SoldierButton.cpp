@@ -1,5 +1,4 @@
 #include "SoldierButton.h"
-#include "ChikenSoldier.cpp"
 
 SoldierButton::SoldierButton(int lvl){
     for(int i=0; i<5; i++){

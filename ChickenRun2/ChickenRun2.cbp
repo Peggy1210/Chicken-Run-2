@@ -37,52 +37,36 @@
 			<Add option="-fexceptions" />
 			<Add directory="allegro/include" />
 		</Compiler>
-		<Unit filename="Bullet.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="Bullet.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="ChickenSoldier.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="ChicksTower.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="ChicksTower.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="ChikenSoldier.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="Bullet.cpp" />
+		<Unit filename="Bullet.h" />
+		<Unit filename="ChickenSoldier.h" />
+		<Unit filename="ChicksTower.cpp" />
+		<Unit filename="ChicksTower.h" />
+		<Unit filename="ChikenSoldier.cpp" />
 		<Unit filename="Circle.cpp" />
 		<Unit filename="Circle.h" />
-		<Unit filename="Draws.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="ComputerSoldier.cpp" />
+		<Unit filename="ComputerSoldier.h" />
+		<Unit filename="Draws.cpp" />
 		<Unit filename="GameWindow.cpp" />
 		<Unit filename="GameWindow.h" />
-		<Unit filename="Main.cpp" />
+		<Unit filename="Level.cpp" />
+		<Unit filename="Level.h" />
 		<Unit filename="Object.h" />
-		<Unit filename="RabbitSoldier.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="RabbitSoldier.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="RabbitTower.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="RabbitTower.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="Updates.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="RabbitSoldier.cpp" />
+		<Unit filename="RabbitSoldier.h" />
+		<Unit filename="RabbitTower.cpp" />
+		<Unit filename="RabbitTower.h" />
+		<Unit filename="SoldierButton.cpp" />
+		<Unit filename="SoldierButton.h" />
+		<Unit filename="TwoPlayer.cpp" />
+		<Unit filename="TwoPlayer.h" />
+		<Unit filename="Updates.cpp" />
+		<Unit filename="boom.cpp" />
+		<Unit filename="boom.h" />
 		<Unit filename="global.cpp" />
 		<Unit filename="global.h" />
-		<Extensions>
-			<lib_finder disable_auto="1" />
-		</Extensions>
+		<Unit filename="main.cpp" />
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
