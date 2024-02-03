@@ -14,7 +14,7 @@
 #define max(a, b) ((a) > (b)? (a) : (b))
 
 void GameWindow::loadings(){
-    al_draw_bitmap(loading[load++%3], 0, 0, 0);
+    al_draw_bitmap(loading[load++%6], 0, 0, 0);
     al_flip_display();
 }
 
@@ -95,7 +95,7 @@ GameWindow::GameWindow(){
     al_install_audio();    // install audio event
     int i;
     char buffer[50];
-    for(i=0; i<3; i++){
+    for(i=0; i<6; i++){
         sprintf(buffer, "./backgrounds/loading%d.jpg", i+1);
         loading[i] = al_load_bitmap(buffer);
     }
@@ -106,8 +106,55 @@ GameWindow::GameWindow(){
     Medium_font = al_load_ttf_font("./fonts/Caviar_Dreams_Bold.ttf",24,0); //load medium font
     Large_font = al_load_ttf_font("./fonts/Caviar_Dreams_Bold.ttf",36,0); //load large font
     menufont = al_load_font("./fonts/pirulen.ttf", 50, 0);
+    volume_font = al_load_font("./fonts/pirulen.ttf", 70 ,0);
     printf("%d: load font\n", load);
     loadings();
+
+    for(i = 0 ; i < 8 ; i++)
+    {
+        char distance[50] = {};
+        sprintf(distance , "./backgrounds/character choose%d.jpg" ,i+1 );
+        character_choose[i]=al_load_bitmap(distance);
+    }
+    first_player_back = al_load_bitmap( "./backgrounds/first player back.jpg");
+
+    for(i = 0 ; i < 6 ; i++)
+    {
+        char distance[50] = {};
+        sprintf(distance , "./backgrounds/main menu%d.jpg" ,i );
+        main_menu[i]=al_load_bitmap(distance);
+    }
+
+    for(i = 0 ; i < 3; i++)
+    {
+        char distance[50] = {};
+        sprintf(distance , "./backgrounds/map menu%d.jpg" ,i+1);
+        map_menu[i]=al_load_bitmap(distance);
+    }
+    map_menu_back =  al_load_bitmap( "./backgrounds/map menu back.jpg");
+    map_menu_start =  al_load_bitmap( "./backgrounds/map menu start.jpg");
+    map_menu_store = al_load_bitmap( "./backgrounds/map menu store.jpg");
+
+    for(i = 0 ; i < 4; i++)
+    {
+        char distance[50] = {};
+        sprintf(distance , "./backgrounds/mode selection%d.jpg" ,i);
+        mode_selection[i]=al_load_bitmap(distance);
+    }
+
+    for(i = 0 ; i < 4; i++)
+    {
+        char distance[50] = {};
+        sprintf(distance , "./backgrounds/settings%d.jpg" ,i);
+        settings[i]=al_load_bitmap(distance);
+    }
+
+    starting =  al_load_bitmap( "./backgrounds/starting.jpg");
+    win = al_load_bitmap( "./backgrounds/win.jpg");
+    lose =  al_load_bitmap( "./backgrounds/lose.jpg");
+
+    first_player_win =  al_load_bitmap( "./backgrounds/1p win.jpg");
+    second_player_win =  al_load_bitmap( "./backgrounds/2p win.jpg");
 
     storebackground = al_load_bitmap("./backgrounds/store.jpeg");
     storebasket = al_load_bitmap("./backgrounds/basket.png");
@@ -173,6 +220,8 @@ int GameWindow::game_run(){
 
 int GameWindow::game_update(){
     switch(window){
+    case STARTING:
+        window = Starting_update(); break;
     case MAIN_MENU:
         window = Main_menu_update(); break;
     case INTRODUCTION:
@@ -197,6 +246,8 @@ int GameWindow::game_update(){
         window = One_player_mode_update(); break;
     case TWO_PLAYER_MODE:
         window = Two_player_mode_update(); break;
+    case TWO_PLAYER_PLAY:
+        window = Two_player_play_update(); break;
     case MAP_MENU:
         window = Map_menu_update(); break;
     case STORE:
@@ -227,10 +278,10 @@ void GameWindow::game_reset(){
     named = false;
     choosed = false;
     character_num = 1;
-    window = PREVIEW;
+    window = SETTINGS;
     chicklevel = 1;
     done = false;
-    manga_done = true;
+    manga_done = false;
     printf("%d: game reset\n", load);
     loadings();
 }
@@ -241,6 +292,7 @@ void GameWindow::game_destroy(){
     al_destroy_font(Medium_font);
     al_destroy_font(Large_font);
     al_destroy_font(menufont);
+    al_destroy_font(volume_font);
 
     al_destroy_timer(timer);
     al_destroy_sample(sample);
@@ -257,11 +309,29 @@ void GameWindow::game_destroy(){
     al_destroy_bitmap(icon);
     al_destroy_bitmap(background);
     int i;
+
+    for(i=0; i<8; i++) al_destroy_bitmap(character_choose[i]);
+    for(i=0; i<6; i++) al_destroy_bitmap(main_menu[i]);
+    for(i=0; i<3; i++) al_destroy_bitmap(map_menu[i]);
+    for(i=0; i<4; i++) al_destroy_bitmap(mode_selection[i]);
+    for(i=0; i<4; i++) al_destroy_bitmap(settings[i]);
+    al_destroy_bitmap(starting);
+    al_destroy_bitmap(win);
+    al_destroy_bitmap(first_player_win);
+    al_destroy_bitmap(second_player_win);
+    al_destroy_bitmap(lose);
+    al_destroy_bitmap(map_menu_back);
+    al_destroy_bitmap(map_menu_store);
+    al_destroy_bitmap(map_menu_start);
+    al_destroy_bitmap(first_player_back);
+
+
     for(i=0; i<3; i++) al_destroy_bitmap(levelbackground[i]);
-    for(i=0; i<3; i++) al_destroy_bitmap(loading[i]);
+    for(i=0; i<6; i++) al_destroy_bitmap(loading[i]);
     for(i=0; i<4; i++) al_destroy_bitmap(naming[i]);
     for(i=0; i<4; i++) al_destroy_bitmap(choosing[i]);
     for(i=0; i<50; i++) al_destroy_bitmap(prev_manga[i]);
+
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
 
@@ -279,7 +349,7 @@ int GameWindow::process_event(){
         if(event.timer.source==timer){
             redraw = true;
         }
-    }else if(event.type==ALLEGRO_EVENT_DISPLAY_CLOSE){
+    }else if(event.type==ALLEGRO_EVENT_DISPLAY_CLOSE || done){
         return GAME_EXIT;
     }else if(event.type==ALLEGRO_EVENT_KEY_DOWN){
         if(window==CHARACTER_NAMING){
@@ -335,6 +405,8 @@ int GameWindow::process_event(){
 
 void GameWindow::draw_running_map(){
     switch(window){
+    case STARTING:
+        starting_draw(); break;
     case MAIN_MENU:
         Main_menu_draw(); break;
     case INTRODUCTION:
@@ -359,6 +431,8 @@ void GameWindow::draw_running_map(){
         One_player_mode_draw(); break;
     case TWO_PLAYER_MODE:
         Two_player_mode_draw(); break;
+    case TWO_PLAYER_PLAY:
+        Two_player_play_draw(); break;
     case MAP_MENU:
         Map_menu_draw(); break;
     case STORE:

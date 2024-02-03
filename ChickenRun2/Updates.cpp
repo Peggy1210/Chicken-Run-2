@@ -3,15 +3,77 @@
 #include "ChicksTower.cpp"
 #include "RabbitTower.cpp"
 
-Windows GameWindow::Main_menu_update(){
+Windows GameWindow::Starting_update()
+{
+    if(key_state[ALLEGRO_KEY_ENTER]) return PREVIEW;
 
+    return STARTING;
+}
+
+Windows GameWindow::Main_menu_update(){
+     if(key_state[ALLEGRO_KEY_DOWN] &&key_down)
+    {
+        main_menu_choosing++;
+        key_down = false;
+    }
+    else  if(key_state[ALLEGRO_KEY_UP] && key_down)
+    {
+        main_menu_choosing--;
+        if(main_menu_choosing < 0) main_menu_choosing = 0;
+        key_down = false;
+    }
+    else  if(key_state[ALLEGRO_KEY_ENTER])
+    {
+        if(main_menu_choosing % 6 == 1) return MODE_SELECTION;
+        else if(main_menu_choosing % 6 == 2) return INTRODUCTION;
+        else if(main_menu_choosing % 6 == 3) return SETTINGS;
+        else if(main_menu_choosing % 6 == 4) return PREVIEW;
+        else if(main_menu_choosing % 6 == 5) done = true;
+    }
+    return MAIN_MENU;
 }
 
 Windows GameWindow::Introduction_update(){
 
 }
 
-Windows GameWindow::Settings_update(){}
+Windows GameWindow::Settings_update(){
+    if(key_state[ALLEGRO_KEY_DOWN] && key_down)
+    {
+        settings_choosing++;
+        key_down = false;
+    }
+    else if(key_state[ALLEGRO_KEY_UP] && key_state)
+    {
+        settings_choosing--;
+        if(settings_choosing < 0) settings_choosing = 0;
+        key_down = false;
+    }
+    else if(key_state[ALLEGRO_KEY_ENTER]&& key_down)
+    {
+        settings_mode = 0;
+        key_down = false;
+    }
+    if(settings_mode % 3 ==1  && settings_choosing % 4 == 1 && key_down)
+    {
+         if(key_state[ALLEGRO_KEY_UP] && key_down)
+            {
+                background_volume++;
+                key_down = false;
+            }
+    }
+    else if(settings_mode % 3 ==2 && settings_choosing % 4 == 2)
+    {
+       if(key_state[ALLEGRO_KEY_UP] && key_down)
+        {
+            special_volume++;
+            key_down = false;
+        }
+    }
+    else if(key_state[ALLEGRO_KEY_ENTER] && settings_choosing % 4 ==3) return MAIN_MENU;
+
+    return SETTINGS;
+}
 
 Windows GameWindow::Review_update(){}
 
@@ -90,7 +152,7 @@ Windows GameWindow::Character_naming_update(){
             al_rest(1);
         }
     }
-    if(named) return ONE_PLAYER_MODE; ///MAIN_MENU
+    if(named) return MAIN_MENU;
     else return CHARACTER_NAMING;
 }
 
@@ -120,7 +182,26 @@ Windows GameWindow::Ending_update(){
     return ENDING;
 }
 
-Windows GameWindow::Mode_selection_update(){}
+Windows GameWindow::Mode_selection_update(){
+    if(key_state[ALLEGRO_KEY_DOWN] && key_down)
+    {
+        mode_selection_choosing++;
+        key_down = false;
+    }
+    if(key_state[ALLEGRO_KEY_UP] && key_down)
+    {
+        if(mode_selection_choosing > 0)mode_selection_choosing--;
+        key_down = false;
+    }
+    if(key_state[ALLEGRO_KEY_ENTER])
+    {
+        if(mode_selection_choosing % 4 == 1) return MAP_MENU;
+        else if(mode_selection_choosing % 4 == 2) return TWO_PLAYER_MODE;
+        else if(mode_selection_choosing % 4 == 3) return MAIN_MENU;
+    }
+
+    return MODE_SELECTION;
+}
 
 Windows GameWindow::One_player_mode_update(){
     //printf("%d", chicklevel);
@@ -143,9 +224,41 @@ Windows GameWindow::One_player_mode_update(){
     return LEVEL1;
 }
 
-Windows GameWindow::Two_player_mode_update(){}
+Windows GameWindow::Two_player_mode_update(){
+    if(key_state[ALLEGRO_KEY_DOWN] && key_down)
+    {
+        character_choosing++;
+        key_down = false;
+    }
+    else if(key_state[ALLEGRO_KEY_DOWN] && key_down)
+    {
+        character_choosing --;
+        if(character_choosing < 0) character_choosing = 0;
+        key_down = false;
+    }
+     else if(key_state[ALLEGRO_KEY_ENTER] && key_down)
+     {
+         character_selected++;
+         key_down = false;
+     }
+    if(character_selected % 3 == 0&&mouse_down && mouse_x<=window_width - 2300 && mouse_x>=window_width-2500 && mouse_y<=window_height && mouse_y>=window_height-200)
+        return MODE_SELECTION;
+    else if(character_selected % 3 == 2) return TWO_PLAYER_PLAY;
 
-Windows GameWindow::Map_menu_update(){}
+    return TWO_PLAYER_MODE;
+}
+
+Windows GameWindow::Two_player_play_update(){
+
+}
+
+Windows GameWindow::Map_menu_update(){
+if(mouse_down && mouse_x<=window_width -200&& mouse_x>=window_width-400 && mouse_y<=window_height-300 && mouse_y>=window_height-430) return STORE;
+else if(mouse_down && mouse_x<=window_width - 180 && mouse_x>=window_width-640 && mouse_y<=window_height-220 && mouse_y>=window_height-300) return ONE_PLAYER_MODE;
+else if(mouse_down && mouse_x<=window_width - 2250 && mouse_x>=window_width-2500 && mouse_y<=window_height && mouse_y>=window_height-160)return MODE_SELECTION;
+
+return MAP_MENU;
+}
 
 Windows GameWindow::Store_update(){
     if(key_state[ALLEGRO_KEY_ENTER]){

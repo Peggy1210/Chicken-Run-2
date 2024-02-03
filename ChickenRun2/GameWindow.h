@@ -54,6 +54,7 @@ public:
     // detect if mouse hovers over a rectangle
     bool mouse_hover(int, int, int, int);
     // detect if a tower will be constructed on road
+    Windows Starting_update();
     Windows Main_menu_update();
     Windows Introduction_update();
     Windows Settings_update();
@@ -66,6 +67,7 @@ public:
     Windows Mode_selection_update();
     Windows One_player_mode_update();
     Windows Two_player_mode_update();
+    Windows Two_player_play_update();
     Windows Map_menu_update();
     Windows Store_update();
     Windows Level1_update();
@@ -75,6 +77,7 @@ public:
     void loadings();
 
     ///Draw windows
+    void starting_draw();
     void Main_menu_draw();
     void Introduction_draw();
     void Settings_draw();
@@ -87,6 +90,7 @@ public:
     void Mode_selection_draw();
     void One_player_mode_draw();
     void Two_player_mode_draw();
+    void Two_player_play_draw();
     void Map_menu_draw();
     void Store_draw();
     void Level1_draw();
@@ -96,13 +100,24 @@ public:
 public:
     bool initial = true;
 
+    int main_menu_choosing = 0;
+    int map_menu_level = 1;
+    int mode_selection_choosing = 0;
+    int character_selected = 0;
+    int character_choosing = 0;
+    int settings_choosing = 0;
+    int settings_mode = 0;
+
+    int  background_volume = 0;
+    int  special_volume = 0;
+
 private:
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_FONT *font = NULL;
     ALLEGRO_FONT *Medium_font = NULL;
     ALLEGRO_FONT *Large_font = NULL;
     ALLEGRO_FONT *menufont;
-
+    ALLEGRO_FONT *volume_font = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
     ALLEGRO_EVENT event;
     ALLEGRO_TIMER *timer = NULL;
@@ -122,8 +137,14 @@ private:
 
     ALLEGRO_BITMAP *icon;
     ALLEGRO_BITMAP *background = NULL;
+    ALLEGRO_BITMAP *starting = NULL;
     ALLEGRO_BITMAP *prev_manga[50];
-    ALLEGRO_BITMAP *loading[3];
+    ALLEGRO_BITMAP *loading[6];
+    ALLEGRO_BITMAP *main_menu[6];
+    ALLEGRO_BITMAP *mode_selection[4];
+    ALLEGRO_BITMAP *character_choose[8];
+    ALLEGRO_BITMAP *map_menu[3];
+    ALLEGRO_BITMAP *settings[4];
     ALLEGRO_BITMAP *levelbackground[3];
     ALLEGRO_BITMAP *storebackground;
     ALLEGRO_BITMAP *storebasket;
@@ -131,6 +152,14 @@ private:
     ALLEGRO_BITMAP *naming[4];
     ALLEGRO_BITMAP *chicken_img;
     ALLEGRO_BITMAP *rabbit_img;
+    ALLEGRO_BITMAP *first_player_win;
+    ALLEGRO_BITMAP *second_player_win;
+    ALLEGRO_BITMAP *first_player_back= NULL;
+    ALLEGRO_BITMAP *win= NULL;
+    ALLEGRO_BITMAP *lose= NULL;
+    ALLEGRO_BITMAP *map_menu_store= NULL;
+    ALLEGRO_BITMAP *map_menu_back= NULL;
+    ALLEGRO_BITMAP *map_menu_start = NULL;
 
     ChicksTower *chickstower;
     RabbitTower *rabbittower;
@@ -142,7 +171,7 @@ private:
     bool choosed = false;
     bool done = false;
     bool manga_done = false;
-    Windows window = PREVIEW;
+    Windows window = STARTING;
 };
 
 
