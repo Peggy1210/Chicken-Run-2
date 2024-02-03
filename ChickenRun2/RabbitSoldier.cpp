@@ -66,11 +66,11 @@ void RabbitSoldier::Update(){
 
     for(unsigned int i=0; i < this->chickbullet_set.size(); i++){
         chickbullet_set[i]->Update();
-        /*if(towerbullet_set[i]->getX()>=window_width){
-            Bullet *bullet = this->towerbullet_set[i];
-            this->towerbullet_set.erase(this->towerbullet_set.begin() + i);
+        if(chickbullet_set[i]->getX()<=field_left){
+            Bullet *bullet = this->chickbullet_set[i];
+            this->chickbullet_set.erase(this->chickbullet_set.begin() + i);
             i--;
             delete bullet;
-        }*/
+        }
     }
 }

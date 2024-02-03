@@ -18,57 +18,126 @@ Windows GameWindow::Review_update(){}
 Windows GameWindow::Close_update(){}
 
 Windows GameWindow::Preview_update(){
+    printf("%d\t", flip);
     if(key_state[ALLEGRO_KEY_DOWN] && key_down){
-        if(flip<8)
-            flip++;
         key_down = false;
+        if(flip<prev_page) flip++;
+        if(flip==prev_page && manga_done) return ENDING;
     }else if(key_state[ALLEGRO_KEY_UP] && key_down){
-        if(flip>=0)
-            flip--;
         key_down = false;
-    }else if(key_state[ALLEGRO_KEY_ENTER] && key_down && flip==8){
-        ///inter = MAIN_MENU;
+        if(flip>0 && flip<prev_page) flip--;
+    }else if(key_state[ALLEGRO_KEY_ENTER] && key_down && flip==prev_page){
         key_down = false;
-    }else if(mouse_down && mouse_x<=window_width && mouse_x>=window_width-100 && mouse_y<=window_height-50 && mouse_y>=window_height-100){
-        ///inter = MAIN_MENU;
+        return CHARACTER_CHOOSE;
+    }else if(flip==prev_page && !manga_done){
+        al_draw_text(menufont, al_map_rgb(200,200,200), 1200, 500, ALLEGRO_ALIGN_CENTER, "--PRESS ENTER TO CONTINUE--");
+        al_flip_display();
+    }else if(mouse_down && mouse_x<=window_width && mouse_x>=window_width-200 && mouse_y<=window_height-100 && mouse_y>=window_height-200 && !manga_done){
         mouse_down = false;
-    }else if(mouse_down){
-        if(flip<8)
-            flip++;
+        return CHARACTER_CHOOSE;
+    }else if(mouse_down && mouse_x<=window_width && mouse_x>=window_width-200 && mouse_y<=window_height-100 && mouse_y>=window_height-200 && manga_done){
         mouse_down = false;
-    }else if(flip==8){
         flip = 0;
-        return LOADING;
+        return PREVIEW;///
+    }else if(mouse_down){
+        if(flip<prev_page) flip++;
+        mouse_down = false;
     }
     return PREVIEW;
 }
 
-Windows GameWindow::Character_choose_update(){}
+Windows GameWindow::Character_choose_update(){
+    if(key_down){
+        key_down = false;
+        if(key_num==ALLEGRO_KEY_RIGHT && character_num<3){
+            character_num++;
+        }else if(key_num==ALLEGRO_KEY_LEFT && character_num>0){
+            character_num--;
+        }else if(key_num==ALLEGRO_KEY_ENTER){
+            choosed = true;
+            char buffer[50];
+            sprintf(buffer, "./character/character%d.png", character_num+1);
+            chicken_img = al_load_bitmap(buffer);
+            rabbit_img = al_load_bitmap("./character/rabbit1.png");
+        }
+    }
+    if(choosed) return CHARACTER_NAMING;
+    else return CHARACTER_CHOOSE;
+}
 
-Windows GameWindow::Character_naming_update(){}
+Windows GameWindow::Character_naming_update(){
+    if(key_down){
+        int L = strlen(name);
+        //printf("%d", L);
+        key_down = false;
+        if(key_num==ALLEGRO_KEY_BACKSPACE){
+            int i;
+            for(i=0; i<L-1; i++) name[i] = name[i];
+            name[i] = '\0';
+        }else if(key_num>=ALLEGRO_KEY_A && key_num<=ALLEGRO_KEY_Z){
+            if(L<49){
+                sprintf(name, "%s%c", name, key_num-ALLEGRO_KEY_A+'A');
+            }else {
+                al_draw_text(menufont, al_map_rgb(0,0,0), window_width/2, window_height/2+50, ALLEGRO_ALIGN_CENTER, "name is restricted to 50 words");
+                al_flip_display();
+                al_rest(1);
+            }
+        }else if(key_num==ALLEGRO_KEY_ENTER && L>0){
+            named = true;
+        }else if(key_num==ALLEGRO_KEY_ENTER && L<=0){
+            al_draw_text(menufont, al_map_rgb(0,0,0), window_width/2, window_height/2+50, ALLEGRO_ALIGN_CENTER, "blank entering");
+            al_flip_display();
+            al_rest(1);
+        }
+    }
+    if(named) return ONE_PLAYER_MODE; ///MAIN_MENU
+    else return CHARACTER_NAMING;
+}
 
 Windows GameWindow::Ending_update(){
-
-}
-
-Windows GameWindow::Loading_update(){
-    int i;
-    al_stop_timer(timer);
-    for(i=0; i<6; i++){
-        al_draw_bitmap(loading[i%3], 0, 0, 0);
+    printf("%d\t", flip);
+    if(key_state[ALLEGRO_KEY_DOWN] && key_down){
+        key_down = false;
+        if(flip<end_page) flip++;
+    }else if(key_state[ALLEGRO_KEY_UP] && key_down){
+        key_down = false;
+        if(flip>=prev_page && flip<end_page) flip--;
+        if(flip==prev_page-1 && manga_done) return PREVIEW;
+    }else if(key_state[ALLEGRO_KEY_ENTER] && key_down && flip==end_page){
+        key_down = false;
+        flip = 0;
+        return PREVIEW;///
+    }else if(flip==end_page){
+        al_draw_text(menufont, al_map_rgb(200,200,200), 1200, 500, ALLEGRO_ALIGN_CENTER, "--PRESS ENTER TO CONTINUE--");
         al_flip_display();
-        al_rest(1);
+    }else if(mouse_down && mouse_x<=window_width && mouse_x>=window_width-200 && mouse_y<=window_height-100 && mouse_y>=window_height-200){
+        mouse_down = false;
+        return PREVIEW;///
+    }else if(mouse_down){
+        mouse_down = false;
+        if(flip<end_page) flip++;
     }
-    al_start_timer(timer);
-    return PREVIEW;
+    return ENDING;
 }
 
 Windows GameWindow::Mode_selection_update(){}
 
 Windows GameWindow::One_player_mode_update(){
-    printf("%d", chicklevel);
+    //printf("%d", chicklevel);
+    al_stop_timer(timer);
+    al_draw_bitmap(loading[load++%3], 0, 0, 0);
+    al_flip_display();
+    al_rest(1);
     chickstower = new ChicksTower(this->chicklevel, RIGHT);
+    al_draw_bitmap(loading[load++%3], 0, 0, 0);
+    al_flip_display();
+    al_rest(1);
     rabbittower = new RabbitTower(this->chicklevel, LEFT);
+    al_draw_bitmap(loading[load++%3], 0, 0, 0);
+    al_flip_display();
+    al_rest(1);
+    printf("%d: game start\n", load);
+    al_start_timer(timer);
     //chickensoldier = new SoldierButton(this->chicklevel);
     //rabbitsoldier = new ComputerSoldier(this->chicklevel);
     return LEVEL1;
@@ -78,7 +147,21 @@ Windows GameWindow::Two_player_mode_update(){}
 
 Windows GameWindow::Map_menu_update(){}
 
-Windows GameWindow::Store_update(){}
+Windows GameWindow::Store_update(){
+    if(key_state[ALLEGRO_KEY_ENTER]){
+        key_state[ALLEGRO_KEY_ENTER] = false;
+    }else if(key_state[ALLEGRO_KEY_LEFT]){
+        key_state[ALLEGRO_KEY_LEFT] = false;
+    }else if(key_state[ALLEGRO_KEY_RIGHT]){
+        key_state[ALLEGRO_KEY_RIGHT] = false;
+    }
+    if(mouse_down && mouse_x>=400 && mouse_x<=1000 && mouse_y>=200 && mouse_y<=800){
+        mouse_down = false;
+    }else if(mouse_down && mouse_x>=1400 && mouse_x<=2000 && mouse_y>=200 && mouse_y<=800){
+        mouse_down = false;
+    }
+    return STORE;
+}
 
 Windows GameWindow::Level1_update(){
     if(key_state[ALLEGRO_KEY_ENTER]){

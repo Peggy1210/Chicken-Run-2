@@ -63,7 +63,7 @@ ChicksTower::~ChicksTower(){
 }
 
 void ChicksTower::Draw(){
-    al_draw_bitmap(TowerImage, 200, 200, 0);
+    al_draw_bitmap(TowerImage, field_left, field_upper, 0);
 
     al_draw_bitmap(buttonimage[0][(canAttackLV1? 1:0)], 500, 750, 0);
     al_draw_bitmap(buttonimage[1][(canAttackLV2? 1:0)], 800, 750, 0);
@@ -77,7 +77,7 @@ void ChicksTower::Draw(){
 
     char buffer[50];
     sprintf(buffer, "HP %d", chickslife);
-    al_draw_text(font, al_map_rgb(0, 0, 0), 200, 100, ALLEGRO_ALIGN_LEFT, buffer);
+    al_draw_text(font, al_map_rgb(0, 0, 0), field_left, field_upper, ALLEGRO_ALIGN_LEFT, buffer);
 
     for(unsigned int i=0; i<this->towerbullet_set.size(); i++){
         this->towerbullet_set[i]->Draw();
@@ -92,7 +92,7 @@ void ChicksTower::Draw(){
 void ChicksTower::Attack(){
     if(canAttack){
         Bullet *bullet;
-        bullet = new Bullet(200, 200, this->bullet_harm_point, this->bullet_velocity, direction, this->BulletImage);
+        bullet = new Bullet(field_left, field_upper, this->bullet_harm_point, this->bullet_velocity, direction, this->BulletImage);
         this->towerbullet_set.push_back(bullet);
         canAttack = false;
         cooltime = 0;
@@ -102,31 +102,31 @@ void ChicksTower::Attack(){
 void ChicksTower::Attack(int lvl){
     if(canAttackLV1 && lvl==1){
         ChickenSoldier *soldier;
-        soldier = new ChickenSoldier(200, 200, this->harm_point[0], lvl, RIGHT, this->soldierimage[0][0], this->soldierimage[0][1], this->soldierimage[0][2]);
+        soldier = new ChickenSoldier(field_left, field_upper, this->harm_point[0], lvl, RIGHT, this->soldierimage[0][0], this->soldierimage[0][1], this->soldierimage[0][2]);
         this->chickensoldier_set.push_back(soldier);
         canAttackLV1 = false;
         cooltimeLV1 = 0;
     }else if(canAttackLV2 && lvl==2){
         ChickenSoldier *soldier;
-        soldier = new ChickenSoldier(200, 200, this->harm_point[1], lvl, RIGHT, this->soldierimage[1][0], this->soldierimage[1][1], this->soldierimage[1][2]);
+        soldier = new ChickenSoldier(field_left, field_upper, this->harm_point[1], lvl, RIGHT, this->soldierimage[1][0], this->soldierimage[1][1], this->soldierimage[1][2]);
         this->chickensoldier_set.push_back(soldier);
         canAttackLV2 = false;
         cooltimeLV2 = 0;
     }else if(canAttackLV3 && lvl==3){
         ChickenSoldier *soldier;
-        soldier = new ChickenSoldier(200, 200, this->harm_point[2], lvl, RIGHT, this->soldierimage[2][0], this->soldierimage[2][1], this->soldierimage[2][2]);
+        soldier = new ChickenSoldier(field_left, field_upper, this->harm_point[2], lvl, RIGHT, this->soldierimage[2][0], this->soldierimage[2][1], this->soldierimage[2][2]);
         this->chickensoldier_set.push_back(soldier);
         canAttackLV3 = false;
         cooltimeLV3 = 0;
     }else if(canAttackLV4 && lvl==4){
         ChickenSoldier *soldier;
-        soldier = new ChickenSoldier(200, 200, this->harm_point[3], lvl, RIGHT, this->soldierimage[3][0], this->soldierimage[3][1], this->soldierimage[3][2]);
+        soldier = new ChickenSoldier(field_left, field_upper, this->harm_point[3], lvl, RIGHT, this->soldierimage[3][0], this->soldierimage[3][1], this->soldierimage[3][2]);
         this->chickensoldier_set.push_back(soldier);
         canAttackLV4 = false;
         cooltimeLV4 = 0;
     }else if(canAttackLV5 && lvl==5){
         ChickenSoldier *soldier;
-        soldier = new ChickenSoldier(200, 200, this->harm_point[4], lvl, RIGHT, this->soldierimage[4][0], this->soldierimage[4][1], this->soldierimage[4][2]);
+        soldier = new ChickenSoldier(field_left, field_upper, this->harm_point[4], lvl, RIGHT, this->soldierimage[4][0], this->soldierimage[4][1], this->soldierimage[4][2]);
         this->chickensoldier_set.push_back(soldier);
         canAttackLV5 = false;
         cooltimeLV5 = 0;
@@ -138,7 +138,7 @@ void ChicksTower::UpdateAttack(){
     if(cooltime==500) canAttack = true;
     for(unsigned int i=0; i < this->towerbullet_set.size(); i++){
         towerbullet_set[i]->Update();
-        if(towerbullet_set[i]->getX()>=window_width){
+        if(towerbullet_set[i]->getX()>=field_right-400){
             Bullet *bullet = this->towerbullet_set[i];
             this->towerbullet_set.erase(this->towerbullet_set.begin() + i);
             i--;
@@ -159,13 +159,19 @@ void ChicksTower::UpdateAttack(){
 
     for(unsigned int i=0; i < this->chickensoldier_set.size(); i++){
         chickensoldier_set[i]->Update();
-        /*if(towerbullet_set[i]->getX()>=window_width){
-            Bullet *bullet = this->towerbullet_set[i];
-            this->towerbullet_set.erase(this->towerbullet_set.begin() + i);
+        if(chickensoldier_set[i]->getX()>=field_right-400){
+            ChickenSoldier *soldier = this->chickensoldier_set[i];
+            this->chickensoldier_set.erase(this->chickensoldier_set.begin() + i);
             i--;
-            delete bullet;
-        }*/
+            delete soldier;
+        }
     }
-
-    //printf("%d", cooltime);
 }
+/*
+void ChicksTower::AttackPoint(RabbitTower* tower){
+        for(unsigned int i=0; i < this->chickensoldier_set.size(); i++){
+            for(auto child: tower->rabbitsoldier_set){
+                //chickensoldier_set[i]->AttackPoint(child);
+        }
+}
+*/

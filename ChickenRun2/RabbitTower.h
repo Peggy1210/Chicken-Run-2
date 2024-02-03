@@ -29,11 +29,11 @@ public:
 
     // show selected tower image on cursor position
     ///static void SelectedTower(int, int, int);
-
+std::vector<RabbitSoldier*> rabbitsoldier_set;std::vector<Bullet*> towerbullet_set;
 protected:
     // setting of attack
-    std::vector<Bullet*> towerbullet_set;
-    std::vector<RabbitSoldier*> soldier_set;
+
+
     //std::vector<RabbitSoldier*> soldier_set;
     ALLEGRO_BITMAP *BulletImage;
     ALLEGRO_BITMAP *soldierimage[5][3];
@@ -55,7 +55,7 @@ protected:
     int cooltime = 0;
     bool canAttack = false;
     int direction = 0;
-    int soldier_cooltime = 0;
+    int soldiercooltime = 0;
     bool soldierAttack = false;
     ALLEGRO_FONT *font;
 };

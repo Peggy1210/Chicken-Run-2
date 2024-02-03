@@ -52,10 +52,10 @@ RabbitTower::~RabbitTower(){
         }
     }
 
-    for(auto&& child: this->soldier_set){
+    for(auto&& child: this->rabbitsoldier_set){
         delete child;
     }
-    this->soldier_set.clear();
+    this->rabbitsoldier_set.clear();
 }
 
 void RabbitTower::Draw(){
@@ -69,8 +69,8 @@ void RabbitTower::Draw(){
         this->towerbullet_set[i]->Draw();
     }
 
-    for(unsigned int i=0; i<this->soldier_set.size(); i++){
-        this->soldier_set[i]->Draw();
+    for(unsigned int i=0; i<this->rabbitsoldier_set.size(); i++){
+        this->rabbitsoldier_set[i]->Draw();
     }
 
     al_draw_bitmap(cooltimeimg_lower, window_width-300, window_height-300, 0);
@@ -93,7 +93,7 @@ void RabbitTower::Attack(){
 void RabbitTower::Attack(int lvl){
     RabbitSoldier *soldier;
     soldier = new RabbitSoldier(window_width-500, 200, this->harm_point[lvl-1], lvl, LEFT, this->soldierimage[lvl-1][0], this->soldierimage[lvl-1][1], this->soldierimage[lvl-1][2]);
-    this->soldier_set.push_back(soldier);
+    this->rabbitsoldier_set.push_back(soldier);
 }
 
 void RabbitTower::UpdateAttack(){
@@ -102,33 +102,32 @@ void RabbitTower::UpdateAttack(){
     this->Attack();
     for(unsigned int i=0; i < this->towerbullet_set.size(); i++){
         towerbullet_set[i]->Update();
-        /*if(towerbullet_set[i]->getX()>=window_width){
+        if(towerbullet_set[i]->getX()>=field_left){
             Bullet *bullet = this->towerbullet_set[i];
             this->towerbullet_set.erase(this->towerbullet_set.begin() + i);
             i--;
             delete bullet;
-        }*/
+        }
     }
     //printf("%d", cooltime);
-    if(this->soldier_cooltime<this->countTime) this->soldier_cooltime++;
-    else if(this->soldier_cooltime==this->countTime){
+    if(this->soldiercooltime<this->countTime) this->soldiercooltime++;
+    else if(this->soldiercooltime==this->countTime){
         printf("%d ", soldierLV);
         this->Attack(soldierLV);
         char buffer[50];
-        this->soldier_cooltime = 0;
+        this->soldiercooltime = 0;
         fscanf(file, "%s", buffer);
         this->countTime = atoi(buffer);
         fscanf(file, "%s", buffer);
         this->soldierLV = atoi(buffer);
     }
-    for(unsigned int i=0; i < this->soldier_set.size(); i++){
-
-        soldier_set[i]->Update();
-        /*if(towerbullet_set[i]->getX()>=window_width){
-            Bullet *bullet = this->towerbullet_set[i];
-            this->towerbullet_set.erase(this->towerbullet_set.begin() + i);
+    for(unsigned int i=0; i < this->rabbitsoldier_set.size(); i++){
+        rabbitsoldier_set[i]->Update();
+        if(rabbitsoldier_set[i]->getX()<=field_left){
+            RabbitSoldier *soldier = this->rabbitsoldier_set[i];
+            this->rabbitsoldier_set.erase(this->rabbitsoldier_set.begin() + i);
             i--;
-            delete bullet;
-        }*/
+            delete soldier;
+        }
     }
 }

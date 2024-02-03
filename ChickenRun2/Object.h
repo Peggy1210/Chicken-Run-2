@@ -18,9 +18,9 @@ public:
     int getRadius(){ return circle->r; }
 
     Circle* getCircle()const{ return circle; }
+    Circle *circle;
 
 protected:
-    Circle *circle;
 
 };
 

@@ -14,7 +14,7 @@ public:
     // override virtual function "Object::Draw"
     void Draw();
     void Update();
-    int getHarmPoint() { return harm_point; }
+    //void AttackPoint(RabbitSoldier*);
 
 
     ///static float volume;

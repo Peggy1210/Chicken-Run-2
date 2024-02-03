@@ -22,29 +22,29 @@ void GameWindow::Close_draw(){
 }
 
 void GameWindow::Preview_draw(){
-    if(flip<8 && flip>=0)
-        al_draw_bitmap(manga[flip], 0, 0, 0);
-    al_draw_filled_rectangle(window_width-100, window_height-100, window_width, window_height-50, al_map_rgb(100, 100, 100));
-    al_draw_text(menufont, al_map_rgb(0,0,0), window_width-80, window_height-75, 0, "skip");
+    if(flip<prev_page && flip>=0){
+        al_draw_bitmap(prev_manga[flip], 0, 0, 0);
+        al_draw_filled_rectangle(window_width-200, window_height-200, window_width, window_height-100, al_map_rgba(100, 100, 100, 100));
+        al_draw_text(menufont, al_map_rgb(0,0,0), window_width-100, window_height-175, ALLEGRO_ALIGN_CENTER, "skip");
+    }
 }
 
 void GameWindow::Character_choose_draw(){
-
+    al_draw_bitmap(choosing[character_num],0,0,0);
 }
 
 void GameWindow::Character_naming_draw(){
-
+    al_draw_bitmap(naming[character_num],0,0,0);
+    al_draw_filled_rounded_rectangle(window_width/2, window_height/2-50, window_width/2+800, window_height/2+50, 10, 10, al_map_rgba(256,256,256,100));
+    al_draw_text(menufont, al_map_rgb(255,255,255), window_width/2+400, window_height/2-30, ALLEGRO_ALIGN_CENTER, name);
 }
 
 void GameWindow::Ending_draw(){
-    if(flip<12 && flip>=8)
-        al_draw_bitmap(manga[flip], 0, 0, 0);
-    al_draw_filled_rectangle(window_width-100, window_height-100, window_width, window_height-50, al_map_rgb(100, 100, 100));
-    al_draw_text(menufont, al_map_rgb(0,0,0), window_width-80, window_height-75, 0, "skip");
-}
-
-void GameWindow::Loading_draw(){
-
+    if(flip<end_page && flip>=prev_page){
+        al_draw_bitmap(prev_manga[flip], 0, 0, 0);
+        al_draw_filled_rectangle(window_width-200, window_height-200, window_width, window_height-100, al_map_rgba(100, 100, 100, 100));
+        al_draw_text(menufont, al_map_rgb(0,0,0), window_width-100, window_height-175, ALLEGRO_ALIGN_CENTER, "skip");
+    }
 }
 
 void GameWindow::Mode_selection_draw(){}
@@ -67,10 +67,10 @@ void GameWindow::Store_draw(){
 
 void GameWindow::Level1_draw(){
     al_draw_bitmap(levelbackground[0], 0, 0, 0);
-    chickstower->Draw();
-    //chickensoldier->Draw();
+    al_draw_bitmap(chicken_img, 200, 200, 0);
+    al_draw_bitmap(rabbit_img, 1800, 200, 0);
     rabbittower->Draw();
-    //rabbitsoldier->Draw();
+    chickstower->Draw();
 }
 void GameWindow::Level2_draw(){}
 void GameWindow::Level3_draw(){}

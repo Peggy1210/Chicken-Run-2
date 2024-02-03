@@ -6,6 +6,7 @@
 #include "Circle.h"
 #include "Bullet.h"
 #include "ChickenSoldier.h"
+#include "RabbitTower.h"
 
 class ChicksTower:public Object{
 public:
@@ -24,11 +25,7 @@ public:
     void Attack();
     void Attack(int);
 
-    ///virtual int getWidth(){ return 40; }
-    ///virtual int getHeight(){ return 40; }
-
-    // show selected tower image on cursor position
-    ///static void SelectedTower(int, int, int);
+    //void AttackPoint(RabbitTower*);
 
 protected:
     // setting of attack
