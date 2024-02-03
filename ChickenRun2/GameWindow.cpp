@@ -1,6 +1,4 @@
 #include "GameWindow.h"
-#include "Updates.cpp"
-#include "Draws.cpp"
 #include <iostream>
 
 #define WHITE al_map_rgb(255, 255, 255)
@@ -110,58 +108,51 @@ GameWindow::GameWindow(){
     printf("%d: load font\n", load);
     loadings();
 
-    for(i = 0 ; i < 8 ; i++)
-    {
-        char distance[50] = {};
-        sprintf(distance , "./backgrounds/character choose%d.jpg" ,i+1 );
-        character_choose[i]=al_load_bitmap(distance);
+    win_img = al_load_bitmap("./backgrounds/win.jpg");
+    lose_img = al_load_bitmap("./backgrounds/lose.jpg");
+    storebackground = al_load_bitmap("./backgrounds/store.jpeg");
+    storebasket = al_load_bitmap("./backgrounds/basket.png");
+    for(i=0; i<8; i++){
+        sprintf(buffer, "./backgrounds/character choose%d.jpg", i+1);
+        character_choose[i] = al_load_bitmap(buffer);
     }
-    first_player_back = al_load_bitmap( "./backgrounds/first player back.jpg");
-
-    for(i = 0 ; i < 6 ; i++)
-    {
-        char distance[50] = {};
-        sprintf(distance , "./backgrounds/main menu%d.jpg" ,i );
-        main_menu[i]=al_load_bitmap(distance);
+    first_player_back = al_load_bitmap("./backgrounds/first player back.jpg");
+    for(i=0 ; i < 6 ; i++){
+        sprintf(buffer, "./backgrounds/main menu%d.jpg", i);
+        main_menu[i] = al_load_bitmap(buffer);
     }
-
-    for(i = 0 ; i < 3; i++)
-    {
-        char distance[50] = {};
-        sprintf(distance , "./backgrounds/map menu%d.jpg" ,i+1);
-        map_menu[i]=al_load_bitmap(distance);
+    for(i=0; i<3; i++){
+        sprintf(buffer, "./backgrounds/map menu%d.jpg", i+1);
+        map_menu[i] = al_load_bitmap(buffer);
     }
-    map_menu_back =  al_load_bitmap( "./backgrounds/map menu back.jpg");
-    map_menu_start =  al_load_bitmap( "./backgrounds/map menu start.jpg");
-    map_menu_store = al_load_bitmap( "./backgrounds/map menu store.jpg");
-
-    for(i = 0 ; i < 4; i++)
-    {
-        char distance[50] = {};
-        sprintf(distance , "./backgrounds/mode selection%d.jpg" ,i);
-        mode_selection[i]=al_load_bitmap(distance);
+    map_menu_back = al_load_bitmap("./backgrounds/map menu back.jpg");
+    map_menu_start = al_load_bitmap("./backgrounds/map menu start.jpg");
+    map_menu_store = al_load_bitmap("./backgrounds/map store.jpg");
+    loadings();
+    for(i=0; i<4; i++){
+        sprintf(buffer, "./backgrounds/mode selection%d.jpg", i);
+        mode_selection[i] = al_load_bitmap(buffer);
     }
-
-    for(i = 0 ; i < 4; i++)
-    {
-        char distance[50] = {};
-        sprintf(distance , "./backgrounds/settings%d.jpg" ,i);
-        settings[i]=al_load_bitmap(distance);
+    for(i=0 ; i<4; i++){
+        sprintf(buffer, "./backgrounds/settings%d.jpg", i);
+        settings[i]=al_load_bitmap(buffer);
     }
-
-    starting =  al_load_bitmap( "./backgrounds/starting.jpg");
-    win = al_load_bitmap( "./backgrounds/win.jpg");
-    lose =  al_load_bitmap( "./backgrounds/lose.jpg");
-
-    first_player_win =  al_load_bitmap( "./backgrounds/1p win.jpg");
-    second_player_win =  al_load_bitmap( "./backgrounds/2p win.jpg");
-
+    starting = al_load_bitmap("./backgrounds/starting.jpg");
+    win = al_load_bitmap("./backgrounds/win.jpg");
+    lose = al_load_bitmap("./backgrounds/lose.jpg");
+    first_player_win = al_load_bitmap("./backgrounds/1p win.jpg");
+    second_player_win = al_load_bitmap("./backgrounds/2p win.jpg");
     storebackground = al_load_bitmap("./backgrounds/store.jpeg");
     storebasket = al_load_bitmap("./backgrounds/basket.png");
     for(i=0; i<3; i++){
         sprintf(buffer, "./backgrounds/level%d_background.jpg", i+1);
         levelbackground[i] = al_load_bitmap(buffer);
     }
+    for(i=0; i<3; i++){
+        sprintf(buffer, "./backgrounds/level%d_background.jpg", i+1);
+        levelbackground[i] = al_load_bitmap(buffer);
+    }
+    loadings();
     for(i=0; i<end_page; i++){
         sprintf(buffer, "./manga/manga%d.png", i+1);
         prev_manga[i] = al_load_bitmap(buffer);
@@ -191,9 +182,6 @@ GameWindow::GameWindow(){
 ///start sample, timer
 void GameWindow::game_begin(){
     //printf(">>> Start Level[%d]\n", level->getLevel());
-
-
-
     ///printf("draw_running_map\n");
     loadings();
     al_play_sample_instance(startSound);
@@ -223,41 +211,41 @@ int GameWindow::game_update(){
     case STARTING:
         window = Starting_update(); break;
     case MAIN_MENU:
-        window = Main_menu_update(); break;
+        window = this->Main_menu_update(); break;
     case INTRODUCTION:
-        window = Introduction_update(); break;
+        window = this->Introduction_update(); break;
     case SETTINGS:
-        window = Settings_update(); break;
+        window = this->Settings_update(); break;
     case REVIEW:
-        window = Review_update(); break;
+        window = this->Review_update(); break;
     case CLOSE:
-        window = Close_update(); break;
+        window = this->Close_update(); break;
     case CHARACTER_CHOOSE:
-        window = Character_choose_update(); break;
+        window = this->Character_choose_update(); break;
     case CHARACTER_NAMING:
-        window = Character_naming_update(); break;
+        window = this->Character_naming_update(); break;
     case PREVIEW:
-        window = Preview_update(); break;
+        window = this->Preview_update(); break;
     case ENDING:
-        window = Ending_update(); break;
+        window = this->Ending_update(); break;
     case MODE_SELECTION:
-        window = Mode_selection_update(); break;
+        window = this->Mode_selection_update(); break;
     case ONE_PLAYER_MODE:
-        window = One_player_mode_update(); break;
+        window = this->One_player_mode_update(); break;
     case TWO_PLAYER_MODE:
-        window = Two_player_mode_update(); break;
+        window = this->Two_player_mode_update(); break;
     case TWO_PLAYER_PLAY:
         window = Two_player_play_update(); break;
     case MAP_MENU:
-        window = Map_menu_update(); break;
+        window = this->Map_menu_update(); break;
     case STORE:
-        window = Store_update(); break;
+        window = this->Store_update(); break;
     case LEVEL1:
-        window = Level1_update(); break;
+        window = this->Level1_update(); break;
     case LEVEL2:
-        window = Level2_update(); break;
+        window = this->Level2_update(); break;
     case LEVEL3:
-        window = Level3_update(); break;
+        window = this->Level3_update(); break;
     }
 
     return GAME_CONTINUE;
@@ -278,7 +266,7 @@ void GameWindow::game_reset(){
     named = false;
     choosed = false;
     character_num = 1;
-    window = SETTINGS;
+    window = STARTING;
     chicklevel = 1;
     done = false;
     manga_done = false;
@@ -287,6 +275,7 @@ void GameWindow::game_reset(){
 }
 
 void GameWindow::game_destroy(){
+    delete level;
     game_reset();
     al_destroy_font(font);
     al_destroy_font(Medium_font);
@@ -299,17 +288,15 @@ void GameWindow::game_destroy(){
     al_destroy_sample_instance(startSound);
     al_destroy_sample_instance(backgroundSound);
 
-    delete chickstower;
-    delete rabbittower;
-
     al_destroy_bitmap(storebackground);
     al_destroy_bitmap(storebasket);
     al_destroy_bitmap(chicken_img);
     al_destroy_bitmap(rabbit_img);
     al_destroy_bitmap(icon);
     al_destroy_bitmap(background);
+    al_destroy_bitmap(win_img);
+    al_destroy_bitmap(lose_img);
     int i;
-
     for(i=0; i<8; i++) al_destroy_bitmap(character_choose[i]);
     for(i=0; i<6; i++) al_destroy_bitmap(main_menu[i]);
     for(i=0; i<3; i++) al_destroy_bitmap(map_menu[i]);
@@ -324,14 +311,11 @@ void GameWindow::game_destroy(){
     al_destroy_bitmap(map_menu_store);
     al_destroy_bitmap(map_menu_start);
     al_destroy_bitmap(first_player_back);
-
-
     for(i=0; i<3; i++) al_destroy_bitmap(levelbackground[i]);
     for(i=0; i<6; i++) al_destroy_bitmap(loading[i]);
     for(i=0; i<4; i++) al_destroy_bitmap(naming[i]);
     for(i=0; i<4; i++) al_destroy_bitmap(choosing[i]);
     for(i=0; i<50; i++) al_destroy_bitmap(prev_manga[i]);
-
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
 
@@ -406,43 +390,43 @@ int GameWindow::process_event(){
 void GameWindow::draw_running_map(){
     switch(window){
     case STARTING:
-        starting_draw(); break;
+        this->Starting_draw(); break;
     case MAIN_MENU:
-        Main_menu_draw(); break;
+        this->Main_menu_draw(); break;
     case INTRODUCTION:
-        Introduction_draw(); break;
+        this->Introduction_draw(); break;
     case SETTINGS:
-        Settings_draw(); break;
+        this->Settings_draw(); break;
     case REVIEW:
-        Review_draw(); break;
+        this->Review_draw(); break;
     case CLOSE:
-        Close_draw(); break;
+        this->Close_draw(); break;
     case CHARACTER_CHOOSE:
-        Character_choose_draw(); break;
+        this->Character_choose_draw(); break;
     case CHARACTER_NAMING:
-        Character_naming_draw(); break;
+        this->Character_naming_draw(); break;
     case PREVIEW:
-        Preview_draw(); break;
+        this->Preview_draw(); break;
     case ENDING:
-        Ending_draw(); break;
+        this->Ending_draw(); break;
     case MODE_SELECTION:
-        Mode_selection_draw(); break;
+        this->Mode_selection_draw(); break;
     case ONE_PLAYER_MODE:
-        One_player_mode_draw(); break;
+        this->One_player_mode_draw(); break;
     case TWO_PLAYER_MODE:
-        Two_player_mode_draw(); break;
+        this->Two_player_mode_draw(); break;
     case TWO_PLAYER_PLAY:
         Two_player_play_draw(); break;
     case MAP_MENU:
-        Map_menu_draw(); break;
+        this->Map_menu_draw(); break;
     case STORE:
-        Store_draw(); break;
+        this->Store_draw(); break;
     case LEVEL1:
-        Level1_draw(); break;
+        this->Level1_draw(); break;
     case LEVEL2:
-        Level2_draw(); break;
+        this->Level2_draw(); break;
     case LEVEL3:
-        Level3_draw(); break;
+        this->Level3_draw(); break;
     }
     al_flip_display();
 }

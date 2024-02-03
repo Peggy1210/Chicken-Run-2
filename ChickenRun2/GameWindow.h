@@ -4,10 +4,7 @@
 #include <list>
 #include <time.h>
 #include "global.h"
-#include "Circle.h"
-#include "ChicksTower.h"
-#include "RabbitTower.h"
-
+#include "Level.h"
 #define GAME_INIT -1
 #define GAME_SETTING 0
 #define GAME_SELECT 1
@@ -19,16 +16,6 @@
 #define GAME_EXIT 7
 
 #define tower_cooltime 500
-
-// clock rate
-const float FPS = 60;
-
-// total number of level
-const int LevelNum = 4;
-
-// 1 coin every 2 seconds
-const int CoinSpeed = FPS * 2;
-const int Coin_Time_Gain = 1;
 
 class GameWindow{
 public:
@@ -77,7 +64,7 @@ public:
     void loadings();
 
     ///Draw windows
-    void starting_draw();
+    void Starting_draw();
     void Main_menu_draw();
     void Introduction_draw();
     void Settings_draw();
@@ -99,7 +86,6 @@ public:
 
 public:
     bool initial = true;
-
     int main_menu_choosing = 0;
     int map_menu_level = 1;
     int mode_selection_choosing = 0;
@@ -107,7 +93,6 @@ public:
     int character_choosing = 0;
     int settings_choosing = 0;
     int settings_mode = 0;
-
     int  background_volume = 0;
     int  special_volume = 0;
 
@@ -118,6 +103,7 @@ private:
     ALLEGRO_FONT *Large_font = NULL;
     ALLEGRO_FONT *menufont;
     ALLEGRO_FONT *volume_font = NULL;
+
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
     ALLEGRO_EVENT event;
     ALLEGRO_TIMER *timer = NULL;
@@ -135,16 +121,18 @@ private:
     char name[50] = {};
     int choose = -1;
 
+    Level *level;
+
     ALLEGRO_BITMAP *icon;
     ALLEGRO_BITMAP *background = NULL;
     ALLEGRO_BITMAP *starting = NULL;
     ALLEGRO_BITMAP *prev_manga[50];
-    ALLEGRO_BITMAP *loading[6];
     ALLEGRO_BITMAP *main_menu[6];
     ALLEGRO_BITMAP *mode_selection[4];
     ALLEGRO_BITMAP *character_choose[8];
     ALLEGRO_BITMAP *map_menu[3];
     ALLEGRO_BITMAP *settings[4];
+    ALLEGRO_BITMAP *loading[6];
     ALLEGRO_BITMAP *levelbackground[3];
     ALLEGRO_BITMAP *storebackground;
     ALLEGRO_BITMAP *storebasket;
@@ -152,6 +140,8 @@ private:
     ALLEGRO_BITMAP *naming[4];
     ALLEGRO_BITMAP *chicken_img;
     ALLEGRO_BITMAP *rabbit_img;
+    ALLEGRO_BITMAP *win_img;
+    ALLEGRO_BITMAP *lose_img;
     ALLEGRO_BITMAP *first_player_win;
     ALLEGRO_BITMAP *second_player_win;
     ALLEGRO_BITMAP *first_player_back= NULL;
@@ -161,8 +151,6 @@ private:
     ALLEGRO_BITMAP *map_menu_back= NULL;
     ALLEGRO_BITMAP *map_menu_start = NULL;
 
-    ChicksTower *chickstower;
-    RabbitTower *rabbittower;
     int chicklevel = 1;
     int flip = -1;
     int load = 0;
@@ -171,7 +159,8 @@ private:
     bool choosed = false;
     bool done = false;
     bool manga_done = false;
-    Windows window = STARTING;
+    Windows window = PREVIEW;
+    int level_coin = 0;
 };
 
 

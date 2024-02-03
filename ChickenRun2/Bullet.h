@@ -2,6 +2,7 @@
 #define BULLET_H_INCLUDED
 
 #include "Object.h"
+#include "global.h"
 #include "Circle.h"
 
 class Bullet:public Object{
